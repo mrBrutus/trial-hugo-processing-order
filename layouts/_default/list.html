@@ -1,14 +1,15 @@
 {{ define "main" }}
-  {{ if eq (.Param "scratchProcessing") "layouts" }}
+  {{ if eq (.Param "scratchProcessing") "perLayout" }}
     {{ partial "get-version-info" (dict "ctx" . ) }}
   {{ end }}
-  <h1>{{- .Title -}}
+  <h1>List: {{ .Title }}
     <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
       {{- .time -}}
     {{- end -}}</mark></span></h1>  
 
   <ul>
     <li>Kind: {{ .Kind }}</li>
+    <li>Weight: {{ .Weight }}</li>
   </ul>
   {{ .Content }}<hr>
   {{ range .Pages }}
@@ -19,6 +20,7 @@
     <ul>
       <li>Section: {{ .Section }}</li>
       <li>Kind: {{ .Kind }}</li>
+      <li>Weight: {{ .Weight }}</li>
     </ul>
   {{ end }}
 {{ end }}
