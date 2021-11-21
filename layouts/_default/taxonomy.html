@@ -1,0 +1,26 @@
+{{ define "main" }}
+  {{ if eq (.Param "scratchProcessing") "perLayout" }}
+    {{ partial "get-version-info" (dict "ctx" . ) }}
+  {{ end }}
+  <h1>Taxonomy: {{ .Title }}
+    <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
+      {{- .time -}}
+    {{- end -}}</mark></span></h1>  
+
+  <ul>
+    <li>Kind: {{ .Kind }}</li>
+    <li>Weight: {{ .Weight }}</li>
+  </ul>
+  {{ .Content }}<hr>
+  {{ range .Pages }}
+    <h2><a href="{{ .Permalink }}">{{- .Title -}}</a>
+      <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
+        {{- .time -}}
+      {{- end -}}</mark></span></h2>
+    <ul>
+      <li>Section: {{ .Section }}</li>
+      <li>Kind: {{ .Kind }}</li>
+      <li>Weight: {{ .Weight }}</li>
+    </ul>
+  {{ end }}
+{{ end }}
