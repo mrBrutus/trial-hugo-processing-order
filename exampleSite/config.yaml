@@ -9,3 +9,13 @@ params:
   #   layouts - as the page is processed by the corresponding layout
   #   customLayout - for each page in a loop in custom layout (`_default/custom-layout.html)
   scratchProcessing: customLayout
+
+outputs:
+  home:
+  - HTML
+  - custom-output
+
+outputFormats:
+  custom-output:
+    baseName: custom-output
+    mediaType: text/html
