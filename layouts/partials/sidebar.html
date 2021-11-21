@@ -1,8 +1,8 @@
 <h1>Sidebar</h1>
 
 <span>{{ printf "%v" (partial "prefix" (dict "active" .Page.IsHome )) }}</span>
-<a href="{{ .Site.BaseURL }}">{{- .Site.Title -}}</a>
-<span> <mark>{{- with .Site.Home.Page.Scratch.Get "versioning" -}}{{- .time -}}{{- end -}}</mark></span>
+<a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+<span> <mark>{{ with .Site.Home.Page.Scratch.Get "myScratch" }}{{ .number }}{{ end }}</mark></span>
 
 {{ $level := 0 }}
 {{ $org := .Page }}
@@ -16,25 +16,25 @@
 {{/* list the taxonomies */}}
 <h2>Taxonomies</h2>
 {{ range $taxo, $term := .Site.Taxonomies }}
-  {{ $time := "" }}
+  {{ $number := "" }}
   {{ with $.Site.GetPage $taxo }}
-    {{ with .Page.Scratch.Get "versioning" }}
-      {{ $time = .time }}
+    {{ with .Page.Scratch.Get "myScratch" }}
+      {{ $number = .number }}
     {{ end }}
   {{ end }}
 
   {{ $url := printf "%v%v/" ("/" | absURL) ($taxo | urlize) }}
   <div>
-    <span>{{- printf "%v--" (partial "prefix" (dict "active" (eq $url $.Page.Permalink ))) -}}</span>
-    <a href="{{ $url }}">{{- $taxo -}}</a>
-    <span> <mark>{{- $time -}}</mark></span>
+    <span>{{ printf "%v--" (partial "prefix" (dict "active" (eq $url $.Page.Permalink ))) }}</span>
+    <a href="{{ $url }}">{{ $taxo }}</a>
+    <span> <mark>{{ $number }}</mark></span>
 
     {{ range $index, $element := $term }}
       <div>
-        <span>{{- printf "%v-- --" (partial "prefix" (dict "active" (eq $element.Page.Permalink $.Page.Permalink))) -}}</span>
+        <span>{{ printf "%v-- --" (partial "prefix" (dict "active" (eq $element.Page.Permalink $.Page.Permalink))) }}</span>
         <a href="{{ $element.Page.RelPermalink }}">{{ $element.Page.Title }}</a>
-        <span>({{- printf "%#vx" (len $element) -}})</span>
-        <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}{{- .time -}}{{- end -}}</mark></span>
+        <span>({{ printf "%#vx" (len $element) }})</span>
+        <span> <mark>{{ with .Page.Scratch.Get "myScratch" }}{{ .number }}{{ end }}</mark></span>
       </div>
     {{ end }}
   </div>
@@ -49,11 +49,11 @@
     {{ $prefix = printf "%s-- " $prefix }}
   {{ end }}
 
-  {{ $versioning := .p1.Scratch.Get "versioning" }}
+  {{ $myScratch := .p1.Scratch.Get "myScratch" }}
   <div>
-    <span>{{- $prefix -}}</span>
-    <a href="{{ .p1.Permalink }}">{{- .p1.Title -}}</a>
-    <span> <mark>{{- with $versioning -}}{{- .time -}}{{- end -}}</mark></span>
+    <span>{{ $prefix }}</span>
+    <a href="{{ .p1.Permalink }}">{{ .p1.Title }}</a>
+    <span> <mark>{{ with $myScratch }}{{ .number }}{{ end }}</mark></span>
   </div>
 
   <div>

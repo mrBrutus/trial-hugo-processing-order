@@ -1,0 +1,5 @@
+{{ with .order }}
+  {{ $.ctx.Page.Scratch.Set "myScratch" (dict "number" .) }}
+{{ else }}
+  {{ $.ctx.Page.Scratch.Set "myScratch" (dict "number" (substr (now.UnixNano) 10 -4 ) ) }}
+{{ end }}

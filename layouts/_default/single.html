@@ -1,11 +1,11 @@
 {{ define "main" }}
   {{ if eq (.Param "scratchProcessing") "perLayout" }}
-    {{ partial "get-version-info" (dict "ctx" . ) }}
+    {{ partial "add-scratch" (dict "ctx" . ) }}
   {{ end }}
   <h1>Page: {{ .Title }}
-    <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
-      {{- .time -}}
-    {{- end -}}</mark></span></h1>
+    <span> <mark>{{ with .Page.Scratch.Get "myScratch" }}
+      {{ .number }}
+    {{ end }}</mark></span></h1>
   <ul>
     <li>Kind: {{ .Kind }}</li>
     <li>Weight: {{ .Weight }}</li>

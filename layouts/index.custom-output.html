@@ -4,16 +4,16 @@
   {{ if eq (.Param "scratchProcessing") "customOutput" }}
     {{ $total.Add "total" 1 }}
     {{ range .Site.Pages }}
-      {{ partial "get-version-info" (dict "ctx" . "order" ( $total.Get "total" )) }}
+      {{ partial "add-scratch" (dict "ctx" . "order" ( $total.Get "total" )) }}
       {{ $total.Add "total" 1 }}
     {{ end }}
     {{ warnf "\n\n  --> scratch added to %v pages by this custom output format layout" ($total.Get "total") }}
   {{ end }}
   
   <h1>Home (custom output format): {{ .Site.Title }}
-    <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
-      {{- .time -}}
-    {{- end -}}</mark></span></h1>  
+    <span> <mark>{{ with .Page.Scratch.Get "myScratch" }}
+      {{ .number }}
+    {{ end }}</mark></span></h1>  
   
   {{ with ($total.Get "total") }}
     <p><mark>{{ printf "scratch added to %v pages by custom output format layout" . }}</mark></p>
@@ -24,18 +24,4 @@
     <li>Weight: {{ .Weight }}</li>
   </ul>
 
-
-  {{ .Content }}<hr>
-  {{ range .Pages }}
-    <h2><a href="{{ .Permalink }}">{{- .Title -}}</a>
-      <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
-        {{- .time -}}
-      {{- end -}}</mark></span></h2>
-    <ul>
-      <li>Section: {{ .Section }}</li>
-      <li>Kind: {{ .Kind }}</li>
-      <li>Weight: {{ .Weight }}</li>
-    </ul>
-  {{ end }}
-  
 {{ end }}
