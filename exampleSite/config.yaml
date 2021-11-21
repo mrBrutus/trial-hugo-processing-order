@@ -1,6 +1,6 @@
 aseURL: '/'
-title: Test processing order
-theme: trial-repo-processing-order
+title: Hugo processing order
+theme: trial-hugo-processing-order
 
 outputs:
   home:
