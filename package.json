@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "server": "hugo server -s exampleSite --themesDir=../.. --minify --disableFastRender --cleanDestinationDir --gc",
+    "build" : "hugo        -s exampleSite --themesDir=../.. --minify --cleanDestinationDir --gc"
+  }
+}
