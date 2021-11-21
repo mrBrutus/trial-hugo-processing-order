@@ -2,18 +2,6 @@ aseURL: '/'
 title: Test processing order
 theme: trial-repo-processing-order
 
-params:
-  # scratchProcessing: # homeLayout / homeCustomOutput / perLayout / customLayout
-  # Process the partial for adding some Scratch data to the page:
-  #   "homeLayout" - using a loop in the home layout (`/index.html`)
-  #   "homeCustomOutput" - using a loop in the home custom output layout (`/index.custom-output.html`)
-  #   "perLayout" - as the page is processed by its corresponding layout (`_default/single.html` etc.)
-  #   "customLayout" - using a loop in a custom layout (`_default/custom-layout.html`)
-  # scratchProcessing: homeLayout
-  # scratchProcessing: homeCustomOutput
-  # scratchProcessing: perLayout
-  scratchProcessing: customLayout
-
 outputs:
   home:
   - HTML
@@ -23,3 +11,12 @@ outputFormats:
   custom-output:
     baseName: custom-output
     mediaType: text/html
+
+params:
+  # scratchProcessing: # homeLayout / homeCustomOutput / perLayout / customLayout
+  # Process the partial for adding some Scratch data to the page:
+  #   "homeLayout" - using a loop in the home layout (`/index.html`)
+  #   "homeCustomOutput" - using a loop in the home custom output layout (`/index.custom-output.html`)
+  #   "perLayout" - as the page is processed by its corresponding layout (`_default/single.html` etc.)
+  #   "customLayout" - using a loop in a custom layout (`_default/custom-layout.html`)
+  scratchProcessing: customLayout
