@@ -1,0 +1,10 @@
+{{/* custom layout to process scratch for each page */}}
+{{ if eq (.Param "scratchProcessing") "customLayout" }}
+  {{ $total := newScratch }}
+  {{ $total.Add "total" 1 }}
+  {{ range .Site.Pages }}
+    {{ partial "get-version-info" (dict "ctx" . "order" ( $total.Get "total" )) }}
+    {{ $total.Add "total" 1 }}
+  {{ end }}
+  {{ warnf "\n\n  --> scratch added to %v pages by custom-layout" ($total.Get "total") }}
+{{ end }}

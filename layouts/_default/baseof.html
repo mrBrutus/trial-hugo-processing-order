@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    html {
+      {{/* background-color: #F4F4F5; */}}
+      line-height: 1.1rem;
+    }
+    mark {
+      background-color: #52525B;
+      color: #E4E4E7;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  </style>
+
+  <body style="display: flex; font-family: verdana;">
+    <div style="flex: 20%; font-family: monospace;">
+      <span>scratchProcessing: <mark>{{ .Param "scratchProcessing" }}</mark></span>
+      {{ partial "sidebar" . }}
+    </div>
+    <div style="flex: 80%;">
+      {{- block "main" . }}{{- end }}
+    </div>
+  </body>
+</html>

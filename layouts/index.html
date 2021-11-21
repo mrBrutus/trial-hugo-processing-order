@@ -1,0 +1,37 @@
+{{ define "main" }}
+  {{/* process scratch for each page */}}
+  {{ if eq (.Param "scratchProcessing") "home" }}
+    {{ $total := newScratch }}
+    {{ $total.Add "total" 1 }}
+    {{ range .Site.Pages }}
+      {{ partial "get-version-info" (dict "ctx" . "order" ( $total.Get "total" )) }}
+      {{ $total.Add "total" 1 }}
+    {{ end }}
+    {{ warnf "\n\n  --> scratch added to %v pages by home layout" ($total.Get "total") }}
+  {{ end }}
+
+  {{/* process scratch for this page */}}
+  {{ if eq (.Param "perLayout") "layouts" }}
+    {{ partial "get-version-info" . }}
+  {{ end }}
+
+  <h1>{{- .Site.Title -}}
+    <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
+      {{- .time -}}
+    {{- end -}}</mark></span></h1>
+  <ul>
+    <li>Kind: {{ .Kind }}</li>
+  </ul>
+  {{ .Content }}<hr>
+  {{ range .Pages }}
+    <h2><a href="{{ .Permalink }}">{{- .Title -}}</a>
+      <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}
+        {{- .time -}}
+      {{- end -}}</mark></span></h2>
+
+  <ul>
+    <li>Section: {{ .Section }}</li>
+    <li>Kind: {{ .Kind }}</li>
+  </ul>
+  {{ end }}
+{{ end }}

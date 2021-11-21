@@ -1,0 +1,79 @@
+<h1>Sidebar</h1>
+
+<span>{{ printf "%v" (partial "prefix" (dict "active" .Page.IsHome )) }}</span>
+<a href="{{ .Site.BaseURL }}">{{- .Site.Title -}}</a>
+<span> <mark>{{- with .Site.Home.Page.Scratch.Get "versioning" -}}{{- .time -}}{{- end -}}</mark></span>
+
+{{ $level := 0 }}
+{{ $org := .Page }}
+
+{{ with .Site.GetPage "/" }}
+  {{ range $p := .Pages }}
+    {{ template "sidebar" (dict "p1" $p "p2" .Page "org" $org "level" $level ) }}
+  {{ end }}
+{{ end }}
+
+{{/* list the taxonomies */}}
+<h2>Taxonomies</h2>
+{{ range $taxo, $term := .Site.Taxonomies }}
+  {{ $time := "" }}
+  {{ with $.Site.GetPage $taxo }}
+    {{ with .Page.Scratch.Get "versioning" }}
+      {{ $time = .time }}
+    {{ end }}
+  {{ end }}
+
+  {{ $url := printf "%v%v/" ("/" | absURL) ($taxo | urlize) }}
+  <div>
+    <span>{{- printf "%v--" (partial "prefix" (dict "active" (eq $url $.Page.Permalink ))) -}}</span>
+    <a href="{{ $url }}">{{- $taxo -}}</a>
+    <span> <mark>{{- $time -}}</mark></span>
+
+    {{ range $index, $element := $term }}
+      <div>
+        <span>{{- printf "%v-- --" (partial "prefix" (dict "active" (eq $element.Page.Permalink $.Page.Permalink))) -}}</span>
+        <a href="{{ $element.Page.RelPermalink }}">{{ $element.Page.Title }}</a>
+        <span>({{- printf "%#vx" (len $element) -}})</span>
+        <span> <mark>{{- with .Page.Scratch.Get "versioning" -}}{{- .time -}}{{- end -}}</mark></span>
+      </div>
+    {{ end }}
+  </div>
+{{ end }}
+
+
+{{ define "sidebar" }}
+  {{ $level := .level }}
+
+  {{ $prefix := (partial "prefix" (dict "active" (eq .p1.Permalink .org.Permalink))) }}
+  {{ range (seq (add $level 1)) }}
+    {{ $prefix = printf "%s-- " $prefix }}
+  {{ end }}
+
+  {{ $versioning := .p1.Scratch.Get "versioning" }}
+  <div>
+    <span>{{- $prefix -}}</span>
+    <a href="{{ .p1.Permalink }}">{{- .p1.Title -}}</a>
+    <span> <mark>{{- with $versioning -}}{{- .time -}}{{- end -}}</mark></span>
+  </div>
+
+  <div>
+    {{/* recursive processing */}}
+    {{ if .p1.Parent }}
+      {{ range $p := .p1.Pages }}
+        <div>
+          {{ $level = add $level 1 }}
+          {{ template "sidebar" (dict "p1" $p "p2" $.p1 "org" $.org "level" $level ) }}
+          {{ $level = sub $level 1 }}
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}
+
+
+{{/* inline partial which sets the prefix for indicating the active page in the sidebar */}}
+{{ define "partials/prefix" }}
+  {{ $prefix := "|" }}
+  {{if .active }}{{ $prefix = ">" }}{{end}}
+  {{ return $prefix }}
+{{ end }}
