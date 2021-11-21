@@ -13,7 +13,7 @@ are rendered*. Since Hugo does most of the processing in parallel this is not so
 In this repo I tried four ways to run the partial which adds the `Scratch` data:
 
 1. Using a loop in the home page layout.
-1. Using a loop in a custom output layout for the home page.
+1. Using a loop in a [custom output layout for the home page]( /custom-output.html ).
 1. As the page is processed by its corresponding layout.
 1. Using a loop in a custom layout, which is used by a dedicated content page.
    This page has the `weight` set such that it will be processed first.
